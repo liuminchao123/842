@@ -2,11 +2,12 @@
 #include <stdio.h>
 
 void main() {
-	int a[3][2] = { {1,2}, {3,4}, {5,6} };
-	printf("%d\n", a[0][0]);
-	printf("%d\n", *a[0]);
-	printf("%d\n", a);
-	printf("%d", *a);  
+	enum 枚举名 { 元素列表 };
+	enum Weekday { sum, mon, tue, wed, thu, fri, sat };  // 声明了一个枚举类型
+	enum Weekday workday, weekend;  // 定义枚举变量，变量的值只能在其范围内取
+	workday = mon;  // right
+	//worday = monday; // wrong
+	printf("%d", workday);
 }
 
 
