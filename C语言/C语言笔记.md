@@ -1226,3 +1226,259 @@ void main() {
 7338108
 ```
 
+
+
+## 第七章 结构体
+
+* 用户自己创建的结构体类型
+
+* 声明类型和定义变量分离
+
+* 类型名字首字母大写
+
+  ```c
+  struct Student{   // 数据类型声明  声明了一个Student类型
+  	char name[10];
+  	int age;
+  	char gender;
+  };    // 必须要有分号
+  
+  struct Class{
+      int num;
+      struct Student Lily;   // 可以嵌套，定义了一个Student类型，名字为Lily
+  };
+  ```
+
+* 定义变量
+
+  ```c
+  struct Student Lily, Bob;  // 后定义
+  struct Student{   
+  	char name[10];
+  	int age;
+  	char gender;
+  }Lily, Bob;   // 声明和定义同时进行
+  ```
+
+* 初始化
+
+  ```c
+  struct Student{   // 数据类型声明  声明了一个Student类型
+  	char name[10];
+  	int age;
+  	char gender;
+  }; 
+  struct Student Lily; // 定义
+  Lily = {"Lily", "18", "女"};   // 初始化
+  ```
+
+* 对某一个成员进行初始化
+
+  ```c
+  struct Student Bob = {.name="Bob"};
+  ```
+
+* 同类的结构体变量可以相互赋值
+
+  ```c
+  struct Student Lily = {"Lily", "18", "女"}; 
+  struct Student Bob; 
+  Bob = Lily;
+  ```
+
+
+
+### 结构体数组
+
+```c
+struct Student {   // 数据类型声明  声明了一个Student类型
+	char name[10];
+	int age;
+};
+struct Student boy[3] = {"Bob", 10, "Tom", 5, "Jame", 7};  // 初始化
+struct Student girl[3];  // 定义
+```
+
+
+
+### 结构体指针
+
+```c
+struct Student* pt;  // pt结构体指针 但并未指向
+struct Student Bob = { "Bob", 2 };
+pt = &Bob;  // 指向Bob
+printf("%s", (*pt).name);
+Bob
+```
+
+
+
+### 链表
+
+
+
+## 第八章 共用体类型
+
+* 几个不同的变量共享同一段内存的结构
+
+* 几个变量均从同一地址开始存放
+
+* 在存放时，后一个数据会覆盖前面的数据
+
+* 声明 定义 初始化 与结构体类似
+
+* 关键字为union
+
+  ```c
+  union 共用体名{
+  	n个不同类型的变量
+  }变量表列;
+  ```
+
+  ```c
+  union Data{   // 共用体名字
+  	int i;    // 变量
+  	char ch;
+  	float f;
+  };
+  union Data a, b, c;
+  ```
+
+* 只能引用共用体变量的成员，不能引用共用体变量本身（因为共用体下存放不同类型的数据，地址已知，数据类型未知）
+
+* 一个共用体只能同时存放一个值
+
+  ```c
+  void main() {
+  	union Data {   // 共用体名字
+  		int i;    // 变量
+  		char ch;
+  		float f;
+  	};
+  	union Data a;
+  	a.i = 97;
+  	printf("%d\n", a.i);
+  	printf("%c\n", a.ch);
+  	printf("%f", a.f);
+  }
+  ```
+
+
+
+## 第九章 枚举类型
+
+* 一个变量的值为可数个，可列出，则可以定义为枚举类型
+
+* 关键字 enum
+
+* 枚举类型中的元素的默认对应数值为 0, 1, 2, 3, 4, ……
+
+  ```c
+  enum 枚举名{元素列表};
+  enum Weekday{sum, mon, tue, wed, thu, fri, sat};  // 声明了一个枚举类型
+  enum Weekday workday, weekend;  // 定义枚举变量，变量的值只能在其范围内取
+  ```
+
+* 实际上，workday, weekend 保存的是 在枚举中对应元素的值
+
+  ```c
+  workday = mon;  // 此时workday=1
+  worday = monday; // 错误  枚举中无此元素
+  printf("%d", workday);  // 1
+  ```
+
+* 在声明枚举类型时，可以人为指定元素对应的值
+
+  ```c
+  enum Weekday{sum=7, mon=2, tue, wed, thu, fri, sat};  // 声明了一个枚举类型
+  mon为2 后面未指定 自动加1 wed=3, thu=4, fri=5, sat=6
+  ```
+
+* 可以用来比较  实际上比较的是元素对应的值
+
+  ```c
+  if(workday == mon){
+  	printf("周一是工作日\n");
+  }
+  if(workday != sun){
+  	printf("周日不是工作日\n");
+  }
+  ```
+
+
+
+## 第十章 文件操作
+
+* 对数据文件进行操作
+
+* 输入输出称为流，数据流
+
+* 文件标识 = 文件路径 + 文件名主干 + 文件后缀
+
+  ```c
+  D:\APP_Data\Typora_img\head.jpg
+  ```
+
+* 数据文件分为 ASCⅡ文件和二进制文件
+
+  * ASCⅡ文件：以ASCⅡ代码形式存储，存取前需要转换，又称文本文件
+  * 二进制文件：无需转换，也称镜像文件
+
+* 输入与输出
+
+   ![image-20220908223202582](https://s2.loli.net/2022/09/08/hHKRwYkXLyjVcDq.png)
+
+
+
+### 打开与关闭文件
+
+* fopen函数 打开数据文件
+
+  ```c
+  fopen(文件名, 使用文件方式);
+  fopen("a1", "r"); // 文件名为a1, 只读
+  ```
+
+* 文件使用方式
+
+  ```c
+  文本文件  
+  r 只读 若文件不存在 报错
+  w 只写 若文件不存在 创建新文件
+  a 追加 若文件不存在 报错
+  ```
+
+  ```c
+  二进制文件
+  rb 只读 若文件不存在 报错
+  wb 只写 若文件不存在 创建新文件
+  ab 追加 若文件不存在 报错
+  ```
+
+* fclose函数 关闭数据文件
+
+  ```c
+  fclose(文件指针);
+  返回值为0  代表成功关闭
+  返回值为-1 代表出错   // -1 又称EOF
+  ```
+
+* 不关闭文件就结束程序运行会丢失数据
+
+  
+
+### 读写数据文件
+
+* fgetc 读入一个字符函数
+
+  ```
+  fgetc(文件指针) // 从fp指向的文件读入一个字符
+  ```
+
+* fputc 写出一个字符函数
+
+  ```
+  fputc(文件指针) // 写c一个字符fp指向的文件
+  ```
+
+  
