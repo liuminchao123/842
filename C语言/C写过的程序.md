@@ -59,5 +59,52 @@
    第5次交换元素：8,7,6,5,4,3,2,1,0,
    ```
    
+
+
+
+2. ## 判断整数是否为素数
+
+   素数又称质数，1不是素数，2是素数
+
+   ```c
+   #include <stdio.h>
    
+   void main() {
+   	int judgement(int a);
+   	int a, b;
+   
+   	printf("请输入一个整数：");
+   	scanf("%d", &a);
+   	b = judgement(a);
+   	if (b == 1)
+   		printf("该数为素数\n");
+   	else
+   		printf("该数不为素数\n");
+   }
+   
+   int judgement(int a) {
+   	int i = 2;
+       if (a == 1) return 0;
+       if(a == 2) return 1;    // 2为素数
+   	for (; i < a / 2; i++) {
+   		if (a % i == 0) return 0;
+   	}
+   	return 1;
+   }
+   ```
+
+
+
+## 3.水杨花数
+
+1~2000的水仙花数。
+
+水仙花是美味数字的n次方之和等于本身。n是这个数的位数。
+
+```c
+#include <stdio.h>
+int main(){
+    in
+}
+```
 
