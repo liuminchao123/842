@@ -257,3 +257,36 @@ int min(int a, int b) {  // 返回较小数
 最小公倍数为：21
 ```
 
+
+
+
+
+# C教材习题
+
+4.5
+
+```c
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+	int a;
+	while (1) {
+		scanf("%d", &a);
+		if (a <= 1000)
+			break;
+		else
+			printf("请重新输入！\n");
+	}
+	a = (int)sqrt(a);
+	printf("%d", a);
+}
+```
+
+```
+20000
+请重新输入！
+36
+6
+```
+
