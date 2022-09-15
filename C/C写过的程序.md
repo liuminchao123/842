@@ -259,6 +259,91 @@ int min(int a, int b) {  // 返回较小数
 
 
 
+## 判断闰年
+
+判断任意年份是否为闰年，需要满足以下条件中的任意一个：
+
+* 该年份能被 4 整除同时不能被 100 整除
+* 该年份能被400整除
+
+```c
+# include <stdio.h>
+
+int main() {
+	int judgement(int year);
+
+	int year;
+	printf("请输入一个年份：");
+	scanf("%d", &year);
+	if (judgement(year)) 
+		printf("该年为闰年！");
+	else
+		printf("该年不为闰年！");
+}
+
+int judgement(int year) {
+	if (year % 400 == 0)
+		return 1;
+	if (year%4 == 0 && year%100 != 0)
+		return 1;
+	return 0;
+}
+```
+
+
+
+# C教材例题
+
+## 求pi的近似
+
+![image-20220915205447073](https://s2.loli.net/2022/09/15/knNLY5EibMw7Zp3.png)
+
+```c
+int main() {
+    double pi = 0;
+    double j;  // 加数
+    int sign = 1;  // 符号控制
+    
+    for (int i = 0;; i++) {
+        j = 2 * i + 1;
+        j = 1 / j;   
+        
+        if (j < 1e-6) break;
+        pi = pi + j*sign;
+        sign = -sign;
+    }
+    
+    pi = pi * 4;
+    printf("pi = %10.8f", pi);
+}
+pi = 3.14159065
+```
+
+
+
+## 斐波那契数列
+
+![image-20220915212004576](https://s2.loli.net/2022/09/15/VIK4O8GWbe7QhFA.png)
+
+```c
+// q
+int main() {
+    int num;
+    printf("请输入一个整数:");
+    scanf("%d", &num);
+    num = F(num);
+    printf("%d\n", num);
+}
+
+int F(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return F(n - 1) + F(n - 2);
+}
+```
+
+
+
 
 
 # C教材习题
