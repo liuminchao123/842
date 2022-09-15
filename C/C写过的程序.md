@@ -5,6 +5,7 @@
 #include <stdio.h>
 #define LEN 9  // 定义数组长度
 
+
 void main() {
 	void exchange(int array[]);  // 交换元素函数
 	void swap(int* a, int* b);	// 交换值函数
