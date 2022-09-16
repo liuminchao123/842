@@ -3,8 +3,7 @@
 #include <math.h>
 
 int main() {
-	int a = 3, b = 0;
-
-	a = a>b ? a:b;
-	printf("%d", a);
+	char a[5];
+	scanf("%s", a);
+	printf("%s", a);
 }

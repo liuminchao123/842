@@ -913,13 +913,42 @@ for(;;) printf("i");
 
 * 有序数据的集合
 
+* 下标从零开始
+
 * **在C语言中，数组名代表该数组第一个元素的地址，也是数组的起始地址**
 
   ```c
   scanf("%d", a[0]);   // 不需要加&
   ```
 
-  
+* 不允许临时定义数组大小
+
+  ```c
+  int n;
+  scanf("%d", &n);
+  int a[n];   // 错误
+  ```
+
+* 初始化数组全部元素定义为0
+
+  ```c
+  int main() {
+  	int a[5] = { 0 };
+  	for (int i = 0; i < 5; i++)
+  		printf("%d ", a[i]);
+  }
+  0 0 0 0 0
+      
+  // 只能是全部定义为零
+  int main() {
+  	int a[5] = { 1 };
+  	for (int i = 0; i < 5; i++)
+  		printf("%d ", a[i]);
+  }
+  1 0 0 0 0
+  ```
+
+* 定义时，最好指明数组长度
 
 ### 整型数组
 
@@ -988,13 +1017,17 @@ int a[] = {1,2,3};  // 默认长度为3
 
 
 
-### 字符数组
+### 字符数组（重点）
+
+* 与字符串不同，字符串为常量，不可改变
+* 只定义时要指定长度
+* 定义初始化同时进行一般不要指定长度
 
 ```c
 //定义
-char a[] = "I am an boy.";  // a[]一般无数字
+char a[] = "I am an boy.";  // 这种定义 a[]一般无数字
 char a[] = {'a', 'b', 'c'};
-char a[2] = {'d', 'e'};
+char a[] = {'d', 'e'};
 ```
 
 ```c
@@ -1038,12 +1071,12 @@ ABCDE
 
 
 
-#### 字符结束标志
+#### 字符串结束标志
 
 * `\0` 为结束标志
-* 遇到它，表示字符串结束，前面为有效长度
+* 遇到它，表示字符串结束，将前面的内容组成一个字符串，前面为有效长度
 * 用字符数组存储字符串常量时，会在后面自动加一个`\0` 作为结束符
-* 遇到`\0` 就停止读入或输出
+* 遇到`\0` 就停止读入或输出 （可用于删除后半部分字符）
 
 ```C
 int main() {
@@ -1052,20 +1085,59 @@ int main() {
 	for (i = 0; i < 9; i++) {
 		a[i] = 65 + i;
 	}
-	printf("%s", a);
-    a[5] = '\0';
-    printf("%s", a);
+
+	printf("%s", a);  // ABCDEFGHI烫烫烫虜S岥s
+
+	printf("\n");
+	a[9] = '\0';
+	printf("%s", a);   // ABCDEFGHI
+
+	a[5] = '\0';
+	printf("\n");
+	for (i = 0; i < 9; i++) {  // ABCDEGHI  没有F 
+		printf("%c", a[i]);
+	}
+	printf("\n");
+	printf("%s", a);   // ABCDE
 	return 0;
 }
+ABCDEFGHI烫烫烫虜S岥s
 ABCDEFGHI
+ABCDEGHI
 ABCDE
 ```
+
+```c
+int main(){
+	char a[] = {"ABCDEF"};
+	printf("%s", a);
+}
+ABCDEF
+```
+
+* 输入字符串
+
+```C
+int main() {
+	char a[5];  // 5个字符 + 一个\0  只能输入4个字符
+	scanf("%s", a);  // 不需要加地址符
+	printf("%s", a);
+}
+SWAP
+SWAP
+// 输入 CHINA 会报错
+```
+
+  
 
 
 
 #### 字符串处理函数
 
 * 需要加头文件 `<string.h>` 
+* puts 输出字符串，会自动换行
+* gets 输入字符串
+* strcat 字符串连接函数
 
 ```c
 int main() {
@@ -1073,11 +1145,11 @@ int main() {
 	char str2[] = "bitch";
 	char str3[] = "842";
 	char str4[] = "bitca";
-	gets(str1);  // 从键盘获取字符串
-	puts(str1);   // 输出字符串
+	gets(str1);  // 从键盘获取字符串  big  实际上是4个字符  还有一个j
+	puts(str1);   // 输出字符串  big  会自动换行
 
 	strcpy(str1, str3);  // 将str3赋值到str1中
-	printf("%s\n", str1);
+	printf("%s\n", str1);  // 842
 
 	strcat(str2, str3);   // 拼接str2和str3 然后存到str2中
 	printf("%s\n", str2);
